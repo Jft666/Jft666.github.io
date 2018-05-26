@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Jft666.github.io">
-  <title>Jft</title>
+  <title>JavaWeb小结 | Jft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="JavaWeb小结##（Servlet，request，response，JSP，EL，JSTL）">
 <meta name="keywords" content="java,编程，代码 ，it，网络，物联网，html,开源">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jft">
+<meta property="og:title" content="JavaWeb小结">
 <meta property="og:url" content="https://Jft666.github.io/2018/05/27/Servlet/index.html">
 <meta property="og:site_name" content="Jft">
 <meta property="og:description" content="JavaWeb小结##（Servlet，request，response，JSP，EL，JSTL）">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-26T18:27:38.029Z">
+<meta property="og:updated_time" content="2018-05-26T19:03:33.826Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jft">
+<meta name="twitter:title" content="JavaWeb小结">
 <meta name="twitter:description" content="JavaWeb小结##（Servlet，request，response，JSP，EL，JSTL）">
   
     <link rel="alternative" href="/atom.xml" title="Jft" type="application/atom+xml">
@@ -158,6 +158,21 @@
             <article id="post-Servlet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaWeb小结
+    </h1>
+  
+
+        
+        <a href="/2018/05/27/Servlet/" class="archive-article-date">
+  	<time datetime="2018-05-26T17:59:38.112Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="JavaWeb小结"><a href="#JavaWeb小结" class="headerlink" title="JavaWeb小结"></a>JavaWeb小结</h1><p>##（Servlet，request，response，JSP，EL，JSTL）</p>
@@ -188,6 +203,7 @@
 <h3 id="操作web对象"><a href="#操作web对象" class="headerlink" title="操作web对象"></a>操作web对象</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;接收请求的参数&lt;/h3&gt;</span><br><span class="line">&lt;%= request.getParameter(<span class="string">"id"</span>) %&gt;</span><br><span class="line">&lt;%= request.getParameter(<span class="string">"name"</span>) %&gt;</span><br><span class="line">&lt;%= Arrays.toString(request.getParameterValues(<span class="string">"hobby"</span>)) %&gt;</span><br><span class="line">&lt;hr/&gt;</span><br><span class="line">$&#123; param.id &#125;</span><br><span class="line">$&#123; param.name &#125;</span><br><span class="line">$&#123; paramValues.hobby[<span class="number">0</span>] &#125;</span><br><span class="line">$&#123; paramValues.hobby[<span class="number">1</span>] &#125;</span><br><span class="line">&lt;h3&gt;获取请求头&lt;/h3&gt;</span><br><span class="line">&lt;%= request.getHeader(<span class="string">"User-Agent"</span>) %&gt;</span><br><span class="line">&lt;hr/&gt;</span><br><span class="line">$&#123; header[<span class="string">"User-Agent"</span>] &#125;</span><br><span class="line">&lt;h3&gt;获取全局初始化参数&lt;/h3&gt;</span><br><span class="line">$&#123; initParam.username &#125;</span><br><span class="line">&lt;h3&gt;获取Cookie中的值&lt;/h3&gt;</span><br><span class="line">$&#123; cookie.history.value &#125;</span><br><span class="line">&lt;h3&gt;获取PageContext中的对象&lt;/h3&gt;</span><br><span class="line">IP地址：$&#123; pageContext.request.remoteAddr &#125;</span><br><span class="line">工程路径:$&#123; pageContext.request.contextPath &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 引入JSTL的相关的jar包.</span><br><span class="line">* 在页面中引入标签库.&lt;%@ taglib uri=”” prefix=””%&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;JSTL提供的EL的函数库&lt;/h1&gt;</span><br><span class="line">$&#123; fn:contains(<span class="string">"Hello World"</span>,<span class="string">"Hello"</span>) &#125;</span><br><span class="line">$&#123; fn:length(<span class="string">"HelloWorld"</span>) &#125;</span><br><span class="line">$&#123; fn:toLowerCase(<span class="string">"ABCDE"</span>) &#125;</span><br><span class="line">&lt;c:forEach var=<span class="string">"i"</span> items=<span class="string">'$&#123; fn:split("a-b-c-d","-") &#125;'</span>&gt;</span><br><span class="line">	$&#123; i &#125;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+<p>   持续更新</p>
 
       
 

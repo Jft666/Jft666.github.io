@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Jft666.github.io">
-  <title>Archives: 2018/5 | Jft</title>
+  <title>JDBC 高级（增删改查） | Jft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="技术宅男，专注JAVA。喜欢新事物，特为此博客。">
+  <meta name="description" content="CRUD需求分析 购物的网站中需要显示商品的信息,在商品信息的显示中,如果商品的信息比较多.需要将比较多的商品进行分页的显示.进行条件查询.同时对商品进行修改,插入,删除.">
 <meta name="keywords" content="java,编程，代码 ，it，网络，物联网，html,开源">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jft">
-<meta property="og:url" content="https://Jft666.github.io/archives/2018/05/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC 高级（增删改查）">
+<meta property="og:url" content="https://Jft666.github.io/2018/05/27/CRUD/index.html">
 <meta property="og:site_name" content="Jft">
-<meta property="og:description" content="技术宅男，专注JAVA。喜欢新事物，特为此博客。">
+<meta property="og:description" content="CRUD需求分析 购物的网站中需要显示商品的信息,在商品信息的显示中,如果商品的信息比较多.需要将比较多的商品进行分页的显示.进行条件查询.同时对商品进行修改,插入,删除.">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-26T19:03:07.398Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jft">
-<meta name="twitter:description" content="技术宅男，专注JAVA。喜欢新事物，特为此博客。">
+<meta name="twitter:title" content="JDBC 高级（增删改查）">
+<meta name="twitter:description" content="CRUD需求分析 购物的网站中需要显示商品的信息,在商品信息的显示中,如果商品的信息比较多.需要将比较多的商品进行分页的显示.进行条件查询.同时对商品进行修改,插入,删除.">
   
     <link rel="alternative" href="/atom.xml" title="Jft" type="application/atom+xml">
   
@@ -154,103 +155,273 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-CRUD" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JDBC 高级（增删改查）
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/27/CRUD/" class="archive-article-date">
+
+        
+        <a href="/2018/05/27/CRUD/" class="archive-article-date">
   	<time datetime="2018-05-26T19:02:09.100Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/27/CRUD/">JDBC 高级（增删改查）</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><ul>
+<li>购物的网站中需要显示商品的信息,在商品信息的显示中,如果商品的信息比较多.需要将比较多的商品进行分页的显示.进行条件查询.同时对商品进行修改,插入,删除.</li>
+</ul>
+<a id="more"></a>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ul>
+<li>使用MVC设计模式JSP + Servlet + JavaBean + JDBC实现商品信息的CRUD的操作.</li>
+</ul>
+<h3 id="步骤1：创建数据库和表"><a href="#步骤1：创建数据库和表" class="headerlink" title="步骤1：创建数据库和表"></a>步骤1：创建数据库和表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">create database web_14;</span><br><span class="line">* use web_14;</span><br><span class="line">* create table `product` (</span><br><span class="line">	`pid` varchar (96),</span><br><span class="line">	`pname` varchar (150),</span><br><span class="line">	`market_price` double ,</span><br><span class="line">	`shop_price` double ,</span><br><span class="line">	`pimage` varchar (600),</span><br><span class="line">	`pdate` date ,</span><br><span class="line">	`is_hot` double ,</span><br><span class="line">	`pdesc` varchar (765),</span><br><span class="line">	`pflag` double ,</span><br><span class="line">	`cid` varchar (96)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="步骤2-创建工程导入jar包"><a href="#步骤2-创建工程导入jar包" class="headerlink" title="步骤2:创建工程导入jar包."></a>步骤2:创建工程导入jar包.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msysql驱动</span><br><span class="line">c3p0的包</span><br><span class="line">dbutils的包</span><br><span class="line">beanUtils的包:两个.</span><br><span class="line">JSTL的包:两个</span><br></pre></td></tr></table></figure>
+<h3 id="步骤3-创建包结构"><a href="#步骤3-创建包结构" class="headerlink" title="步骤3:创建包结构"></a>步骤3:创建包结构</h3><h3 id="步骤4：创建JSP页面首页"><a href="#步骤4：创建JSP页面首页" class="headerlink" title="步骤4：创建JSP页面首页"></a>步骤4：创建JSP页面首页</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>欢迎来到商品信息管理平台<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123; pageContext.request.contextPath &#125;/ProductFindAllServlet"</span>&gt;</span>查询所有商品<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><ul>
+<li><p>Servlet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request,HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">			request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">			response.setContentType(<span class="string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">			String method = request.getParameter(<span class="string">"method"</span>);</span><br><span class="line">			<span class="keyword">if</span>(<span class="string">"findAll"</span>.equals(method))&#123;</span><br><span class="line">				findAll(request,response);</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"add"</span>.equals(method))&#123;</span><br><span class="line">				add(request,response);</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"delete"</span>.equals(method))&#123;</span><br><span class="line">				delete(request,response);</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"search"</span>.equals(method))&#123;</span><br><span class="line">				search(request,response);</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"deleteAll"</span>.equals(method))&#123;</span><br><span class="line">				deleteAll(request,response);</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//删除多个值</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">(HttpServletRequest request,HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">try</span>&#123;</span><br><span class="line">				String[] ids = request.getParameterValues(<span class="string">"ids"</span>);</span><br><span class="line">				ProductService producService=<span class="keyword">new</span> ProductService();</span><br><span class="line">				producService.deleteAll(ids);</span><br><span class="line">				</span><br><span class="line">				findAll(request, response);</span><br><span class="line">			&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//模糊查询</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">search</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">			String pname = request.getParameter(<span class="string">"pname"</span>);</span><br><span class="line">			ProductService producService=<span class="keyword">new</span> ProductService();</span><br><span class="line">			List&lt;Product&gt; list = producService.search(pname);</span><br><span class="line">			request.setAttribute(<span class="string">"list"</span>, list);</span><br><span class="line">			request.getRequestDispatcher(<span class="string">"/jsp/product_list.jsp"</span>).forward(request, response);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>//根据id删除商品信息
+private void delete(HttpServletRequest request, HttpServletResponse response) {
+    try{
+        String pid = request.getParameter(&quot;pid&quot;);
+        ProductService producService=new ProductService();
+        producService.delete(pid);
 
-        <div class="article-info info-on-right">
-          
-          
+        findAll(request, response);
+    }catch(Exception e){
+        e.printStackTrace();
+    }
 
+}
+//添加商品信息
+private void add(HttpServletRequest request, HttpServletResponse response) {
+    try{
+        String token1=(String) request.getSession().getAttribute(&quot;token&quot;);
+        String token2 = request.getParameter(&quot;token&quot;);
+        request.getSession().removeAttribute(&quot;token&quot;);
+</code></pre></li>
+</ul>
+<pre><code>        if(!token2.equals(token1)){
+            request.setAttribute(&quot;msg&quot;,&quot;亲！您已经提交过！请不要重复提交了!&quot; );
+            request.getRequestDispatcher(&quot;/jsp/msg.jsp&quot;).forward(request, response);;
+            return;
+        }
+        Map&lt;String, String[]&gt; map = request.getParameterMap();
+        Product product=new Product();
+        BeanUtils.populate(product, map);
+        product.setPid(UUIDUtils.getUUID());
+        ProductService producService=new ProductService();
+        producService.save(product);
+
+
+        findAll(request, response);
+        //request.getRequestDispatcher(&quot;/ProductServlet?method=findAll&quot;).forward(request, response);
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+
+}
+    //查询所有商品
+private void findAll(HttpServletRequest request,HttpServletResponse response) {
+    try{
+        ProductService producService=new ProductService();
+        List&lt;Product&gt; list = producService.findAll();
+        request.setAttribute(&quot;list&quot;,list);
+        request.getRequestDispatcher(&quot;/jsp/product_list.jsp&quot;).forward(request, response);
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+
+}
+
+protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+}
+</code></pre><p>  }<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Service</span><br><span class="line"></span><br><span class="line">  ```java</span><br><span class="line">  public class ProductService &#123;</span><br><span class="line">  	//查询所有信息</span><br><span class="line">  	public List&lt;Product&gt; findAll() throws SQLException &#123;</span><br><span class="line">  		ProductDao productDao=new ProductDao();</span><br><span class="line">  		List&lt;Product&gt; list=productDao.findaAll();</span><br><span class="line">  		return list;</span><br><span class="line">  	&#125;</span><br><span class="line">  	//添加信息</span><br><span class="line">  	public void save(Product product) throws SQLException &#123;</span><br><span class="line">  		ProductDao productDao=new ProductDao();</span><br><span class="line">  		productDao.save(product);</span><br><span class="line">  	&#125;</span><br><span class="line">  	//模糊查询</span><br><span class="line">  	public List&lt;Product&gt; search(String pname) throws SQLException &#123;</span><br><span class="line">  		ProductDao productDao=new ProductDao();</span><br><span class="line">  		List&lt;Product&gt; list=productDao.search(pname);</span><br><span class="line">  		return list;</span><br><span class="line">  	&#125;</span><br><span class="line">  	//根据id删除</span><br><span class="line">  	public void delete(String pid) throws SQLException &#123;</span><br><span class="line">  		// TODO Auto-generated method stub</span><br><span class="line">  		ProductDao productDao=new ProductDao();</span><br><span class="line">  		productDao.delete(pid);</span><br><span class="line">  	&#125;</span><br><span class="line">  	//删除多个</span><br><span class="line">  	public void deleteAll(String[] ids) &#123;</span><br><span class="line">  		Connection conn=null;</span><br><span class="line">  		try&#123;</span><br><span class="line">  			</span><br><span class="line">  		&#125;catch(Exception e)&#123;</span><br><span class="line">  			e.printStackTrace();</span><br><span class="line">  		&#125;</span><br><span class="line">  		</span><br><span class="line">  		</span><br><span class="line">  	&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>​
+</code></pre><ul>
+<li><p>Dao</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductDao</span> </span>&#123;</span><br><span class="line">	<span class="comment">//查询所有信息</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;Product&gt; <span class="title">findaAll</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		QueryRunner queryRunner=<span class="keyword">new</span> QueryRunner(JDBCUtils.getDataSource());</span><br><span class="line">		String sql=<span class="string">"select * from product"</span>;</span><br><span class="line">		List&lt;Product&gt; list = queryRunner.query(sql,<span class="keyword">new</span> BeanListHandler&lt;Product&gt;(Product.class));</span><br><span class="line">		<span class="keyword">return</span> list;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//添加信息</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(Product product)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		QueryRunner queryRunner=<span class="keyword">new</span> QueryRunner(JDBCUtils.getDataSource());</span><br><span class="line">		String sql=<span class="string">"insert into product values(?,?,?,?,?,?,?,?,?,?)"</span>;</span><br><span class="line">		Object[] param=&#123;product.getPid(),product.getPname(),product.getMarket_price(),product.getShop_price(),product.getPimage(),product.getPdate(),product.getIs_hot(),product.getPdesc(),product.getPflag(),product.getCid()&#125;;</span><br><span class="line">		queryRunner.update(sql, param);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;Product&gt; <span class="title">search</span><span class="params">(String pname)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		QueryRunner queryRunner=<span class="keyword">new</span> QueryRunner(JDBCUtils.getDataSource());</span><br><span class="line">		<span class="comment">/*String sql="select * from product where 1=1 ";</span></span><br><span class="line"><span class="comment">		if(pname!=null)&#123;</span></span><br><span class="line"><span class="comment">			sql+=" and pname like '?'";</span></span><br><span class="line"><span class="comment">		&#125;*/</span></span><br><span class="line">		String sql = <span class="string">"select * from product where pname like ? order by pdate desc"</span>;</span><br><span class="line">		List&lt;Product&gt; list = queryRunner.query(sql,<span class="keyword">new</span> BeanListHandler&lt;Product&gt;(Product.class),<span class="string">"%"</span>+pname+<span class="string">"%"</span>);</span><br><span class="line">		<span class="keyword">return</span> list;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//根据id删除</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String pid)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		QueryRunner queryRunner=<span class="keyword">new</span> QueryRunner(JDBCUtils.getDataSource());</span><br><span class="line">		String sql=<span class="string">"delete from product where pid=?"</span>;</span><br><span class="line">		queryRunner.update(sql, pid);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>Domain</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String pid;</span><br><span class="line">	<span class="keyword">private</span> String pname;</span><br><span class="line">	<span class="keyword">private</span> Double market_price;</span><br><span class="line">	<span class="keyword">private</span> Double shop_price;</span><br><span class="line">	<span class="keyword">private</span> String pimage;</span><br><span class="line">	<span class="keyword">private</span> Date pdate;</span><br><span class="line">	<span class="keyword">private</span> Double is_hot;</span><br><span class="line">	<span class="keyword">private</span> String pdesc;</span><br><span class="line">	<span class="keyword">private</span> Double pflag;</span><br><span class="line">	<span class="keyword">private</span> String cid;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPid</span><span class="params">(String pid)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pid = pid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPname</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pname;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPname</span><span class="params">(String pname)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pname = pname;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Double <span class="title">getMarket_price</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> market_price;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMarket_price</span><span class="params">(Double market_price)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.market_price = market_price;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Double <span class="title">getShop_price</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> shop_price;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setShop_price</span><span class="params">(Double shop_price)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.shop_price = shop_price;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPimage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pimage;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPimage</span><span class="params">(String pimage)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pimage = pimage;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Date <span class="title">getPdate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pdate;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPdate</span><span class="params">(Date pdate)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pdate = pdate;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Double <span class="title">getIs_hot</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> is_hot;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIs_hot</span><span class="params">(Double is_hot)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.is_hot = is_hot;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPdesc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pdesc;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPdesc</span><span class="params">(String pdesc)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pdesc = pdesc;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Double <span class="title">getPflag</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pflag;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPflag</span><span class="params">(Double pflag)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.pflag = pflag;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getCid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> cid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCid</span><span class="params">(String cid)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.cid = cid;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JSP</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;商品的列表页面&lt;/h1&gt;</span><br><span class="line">&lt;form id=<span class="string">"form1"</span> action=<span class="string">"$&#123; pageContext.request.contextPath &#125;/ProductServlet?method=deleteAll"</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">&lt;table border=<span class="string">"1"</span> width=<span class="string">"800"</span>&gt;</span><br><span class="line">	&lt;tr&gt;</span><br><span class="line">		&lt;td colspan=<span class="string">"8"</span>&gt;</span><br><span class="line">			名称:&lt;input type=<span class="string">"text"</span> id=<span class="string">"pname"</span> name=<span class="string">"pname"</span>&gt;</span><br><span class="line">			&lt;input type=<span class="string">"button"</span> value=<span class="string">"查询"</span>  onclick=<span class="string">"search()"</span>&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><br><span class="line">			&lt;input type=<span class="string">"button"</span> value=<span class="string">"添加"</span> onclick=<span class="string">"addPage()"</span>/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><br><span class="line">			&lt;input type=<span class="string">"button"</span> value=<span class="string">"删除"</span> onclick=<span class="string">"delAll()"</span>/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><br><span class="line">		&lt;/td&gt;	</span><br><span class="line">	&lt;/tr&gt;</span><br><span class="line">	&lt;tr&gt;</span><br><span class="line">		&lt;td&gt;序号&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;&lt;input type="checkbox" id="selectAll" /&gt;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;商品名称&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;市场价格&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;商城价格&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;是否热门&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;是否下架&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;操作&lt;/td&gt;</span><br><span class="line">	&lt;/tr&gt;</span><br><span class="line">	&lt;c:forEach var=<span class="string">"p"</span> items=<span class="string">"$&#123; list &#125;"</span> varStatus=<span class="string">"status"</span>&gt;</span><br><span class="line">	&lt;tr&gt;</span><br><span class="line">		&lt;td&gt;$&#123; status.count &#125;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;&lt;input type="checkbox" id="ids" name="ids" value="$&#123; p.pid &#125;"/&gt;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;$&#123; p.pname &#125;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;$&#123; p.market_price &#125;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;$&#123; p.shop_price &#125;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;</span><br><span class="line">			&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123; p.is_hot == 1 &#125;"</span>&gt;</span><br><span class="line">				是</span><br><span class="line">			&lt;/c:if&gt;</span><br><span class="line">			&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123; p.is_hot == 0 &#125;"</span>&gt;</span><br><span class="line">				否</span><br><span class="line">			&lt;/c:if&gt;</span><br><span class="line">		&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;</span><br><span class="line">			&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123; p.pflag == 1 &#125;"</span>&gt;</span><br><span class="line">				已下架</span><br><span class="line">			&lt;/c:if&gt;</span><br><span class="line">			&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123; p.pflag == 0 &#125;"</span>&gt;</span><br><span class="line">				未下架</span><br><span class="line">			&lt;/c:if&gt;</span><br><span class="line">		&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;&lt;a href="$&#123; pageContext.request.contextPath &#125;/ProductServlet?method=update&amp;pid=$&#123;p.pid&#125;"&gt;修改&lt;/a&gt;</span><br><span class="line">		&lt;a onclick="del('$&#123;p.pid&#125;')"&gt;删除&lt;/a&gt; 		</span><br><span class="line">		</span><br><span class="line">	&lt;/tr&gt;</span><br><span class="line">	&lt;/c:forEach&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h2 id="重要点"><a href="#重要点" class="headerlink" title="重要点"></a>重要点</h2><ul>
+<li>条件查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">通用处理:</span><br><span class="line">	<span class="number">1</span>. 定义一个SQL</span><br><span class="line">		String sql= <span class="string">"SELECT * FROM product where 1=1 "</span>   <span class="comment">// 恒等</span></span><br><span class="line">	<span class="number">2</span>. 判断查询条件,追加 and 条件</span><br><span class="line">		<span class="keyword">if</span>(panme!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            sql += <span class="string">" and pname like '?'"</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">if</span>(cid!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            sql += <span class="string">" and cid = ?"</span></span><br><span class="line">         &#125;</span><br><span class="line">    注意实现:</span><br><span class="line">    	编写SQL时,在SQL语句的后面和前面添加空格</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>分页查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#格式: select * from 表 limit ?,?</span><br><span class="line">#参数1: begin 开始的索引. MySQL数据库会自动为每一条记录添加一个索引,索引从0开始.</span><br><span class="line">#参数2: pageSize 每页显示个数</span><br><span class="line">####练习</span><br><span class="line">#1.查询第一页,每页显示10条</span><br><span class="line">SELECT * FROM product LIMIT 0,10;</span><br><span class="line">#2.查询第二页,每页显示10条</span><br><span class="line">SELECT * FROM product LIMIT 10,10;</span><br><span class="line">#3.查询第二页,每页显示10条</span><br><span class="line">SELECT * FROM product LIMIT 20,10;</span><br><span class="line">#4. 查询第N天,每页显示10条.  pageNumber</span><br><span class="line">SELECT * FROM product LIMIT ?,10;</span><br><span class="line"># begin = (pageNumber-1)*pageSize;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<p>未完善，需要完整源码，滴滴我 V:155 5582 0774   持续更新</p>
+</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/bbb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/aaa.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://Jft666.github.io/2018/05/27/CRUD/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/27/hello-world/" class="archive-article-date">
-  	<time datetime="2018-05-26T18:16:07.245Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/27/hello-world/">Hello World</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/27/Servlet/" class="archive-article-date">
-  	<time datetime="2018-05-26T17:59:38.112Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/27/Servlet/">JavaWeb小结</a>
-    </h1>
+  <div id="SOHUCS" sid="CRUD" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -273,8 +444,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
