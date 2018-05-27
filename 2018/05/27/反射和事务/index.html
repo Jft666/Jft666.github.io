@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://Jft666.github.io">
   <title>反射和事务 | Jft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例   2. 回顾12345678910111213141516171819">
+  <meta name="description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例 &amp;lt;!-- more --&amp;gt;   2. 回顾123456789">
 <meta name="keywords" content="java,编程，代码 ，it，网络，物联网，html,开源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反射和事务">
 <meta property="og:url" content="https://Jft666.github.io/2018/05/27/反射和事务/index.html">
 <meta property="og:site_name" content="Jft">
-<meta property="og:description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例   2. 回顾12345678910111213141516171819">
+<meta property="og:description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例 &amp;lt;!-- more --&amp;gt;   2. 回顾123456789">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-27T02:51:59.902Z">
+<meta property="og:updated_time" content="2018-05-27T02:56:40.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反射和事务">
-<meta name="twitter:description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例   2. 回顾12345678910111213141516171819">
+<meta name="twitter:description" content="反射和事务1. 主要内容 [ ] 【应用】独立完成查询所有商品功能  [ ] 【应用】独立完成商品的添加功能  [ ] 【应用】独立完成商品的修改功能  [ ] 【应用】独立完成商品的删除/多选删除功能  [ ] 【应用】独立完成商品条件查询功能  [ ] 【掌握】掌握MySQL分页语句  [ ] 【掌握】掌握分页查询的案例 &amp;lt;!-- more --&amp;gt;   2. 回顾123456789">
   
     <link rel="alternative" href="/atom.xml" title="Jft" type="application/atom+xml">
   
@@ -189,7 +189,8 @@
 <li><p>[ ] 【掌握】掌握MySQL分页语句</p>
 </li>
 <li><p>[ ] 【掌握】掌握分页查询的案例</p>
-</li>
+<pre><code>&lt;!-- more --&gt;
+</code></pre></li>
 </ul>
 <h2 id="2-回顾"><a href="#2-回顾" class="headerlink" title="2. 回顾"></a>2. 回顾</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">反射:</span><br><span class="line">	作用: 提供了程序的扩展性</span><br><span class="line">	操作:</span><br><span class="line">		1. 获取Class方式</span><br><span class="line">			* 类.class</span><br><span class="line">			* 对象.getClass()</span><br><span class="line">			* Class.forName(String 全限定类名)  ★</span><br><span class="line">		2. 获取构造函数</span><br><span class="line">		3. 获取方法 getMethod(String name);</span><br><span class="line">		4. new Instance();</span><br><span class="line">事务:</span><br><span class="line">	概念: 逻辑上的一组操作,组成这组操作的各个单元,要么都成功,要么都失败</span><br><span class="line">	标准模版:</span><br><span class="line">		Connection conn = null;</span><br><span class="line">		try&#123;</span><br><span class="line">            //1. 获取连接</span><br><span class="line">            //2. 开启事物</span><br><span class="line">            //3. 执行一组操作</span><br><span class="line">            //4. 提交事务</span><br><span class="line">		&#125;catch()&#123;</span><br><span class="line">            //回滚事务</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">事务特性: </span><br><span class="line">	A 原子性</span><br><span class="line">	C 一致性</span><br><span class="line">	I 隔离线</span><br><span class="line">	D 持久性</span><br></pre></td></tr></table></figure>
 <h2 id="3-课堂小结"><a href="#3-课堂小结" class="headerlink" title="3. 课堂小结"></a>3. 课堂小结</h2><h2 id="3-1-案例优化"><a href="#3-1-案例优化" class="headerlink" title="3.1 案例优化"></a>3.1 案例优化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">需求分析: 在企业一般都是模块化开发,即一个ProductServlet要实现商品的CRUD所有操作,不需要多个Servlet</span><br></pre></td></tr></table></figure>
